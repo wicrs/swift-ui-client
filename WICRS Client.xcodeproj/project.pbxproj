@@ -7,21 +7,30 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		E6307659278BF4750055F02B /* WICRS_ClientApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6307649278BF4740055F02B /* WICRS_ClientApp.swift */; };
-		E630765A278BF4750055F02B /* WICRS_ClientApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6307649278BF4740055F02B /* WICRS_ClientApp.swift */; };
+		E6307659278BF4750055F02B /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6307649278BF4740055F02B /* App.swift */; };
+		E630765A278BF4750055F02B /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6307649278BF4740055F02B /* App.swift */; };
 		E630765B278BF4750055F02B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E630764A278BF4740055F02B /* ContentView.swift */; };
 		E630765C278BF4750055F02B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E630764A278BF4740055F02B /* ContentView.swift */; };
 		E630765D278BF4750055F02B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E630764B278BF4750055F02B /* Assets.xcassets */; };
 		E630765E278BF4750055F02B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E630764B278BF4750055F02B /* Assets.xcassets */; };
+		E6307669278BF81D0055F02B /* Channel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6307668278BF81D0055F02B /* Channel.swift */; };
+		E630766A278BF81D0055F02B /* Channel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6307668278BF81D0055F02B /* Channel.swift */; };
+		E630766C278BF9DF0055F02B /* Permission.swift in Sources */ = {isa = PBXBuildFile; fileRef = E630766B278BF9DF0055F02B /* Permission.swift */; };
+		E630766D278BF9DF0055F02B /* Permission.swift in Sources */ = {isa = PBXBuildFile; fileRef = E630766B278BF9DF0055F02B /* Permission.swift */; };
+		E630766F278BFC820055F02B /* Hub.swift in Sources */ = {isa = PBXBuildFile; fileRef = E630766E278BFC820055F02B /* Hub.swift */; };
+		E6307670278BFC820055F02B /* Hub.swift in Sources */ = {isa = PBXBuildFile; fileRef = E630766E278BFC820055F02B /* Hub.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		E6307649278BF4740055F02B /* WICRS_ClientApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WICRS_ClientApp.swift; sourceTree = "<group>"; };
+		E6307649278BF4740055F02B /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		E630764A278BF4740055F02B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		E630764B278BF4750055F02B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E6307650278BF4750055F02B /* WICRS Client.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "WICRS Client.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E6307656278BF4750055F02B /* WICRS Client.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "WICRS Client.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E6307658278BF4750055F02B /* macOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = macOS.entitlements; sourceTree = "<group>"; };
+		E6307668278BF81D0055F02B /* Channel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Channel.swift; sourceTree = "<group>"; };
+		E630766B278BF9DF0055F02B /* Permission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Permission.swift; sourceTree = "<group>"; };
+		E630766E278BFC820055F02B /* Hub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hub.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,7 +63,8 @@
 		E6307648278BF4740055F02B /* Shared */ = {
 			isa = PBXGroup;
 			children = (
-				E6307649278BF4740055F02B /* WICRS_ClientApp.swift */,
+				E6307649278BF4740055F02B /* App.swift */,
+				E6307667278BF8020055F02B /* Api */,
 				E630764A278BF4740055F02B /* ContentView.swift */,
 				E630764B278BF4750055F02B /* Assets.xcassets */,
 			);
@@ -76,6 +86,16 @@
 				E6307658278BF4750055F02B /* macOS.entitlements */,
 			);
 			path = macOS;
+			sourceTree = "<group>";
+		};
+		E6307667278BF8020055F02B /* Api */ = {
+			isa = PBXGroup;
+			children = (
+				E6307668278BF81D0055F02B /* Channel.swift */,
+				E630766E278BFC820055F02B /* Hub.swift */,
+				E630766B278BF9DF0055F02B /* Permission.swift */,
+			);
+			path = Api;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -176,8 +196,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E630766F278BFC820055F02B /* Hub.swift in Sources */,
+				E630766C278BF9DF0055F02B /* Permission.swift in Sources */,
 				E630765B278BF4750055F02B /* ContentView.swift in Sources */,
-				E6307659278BF4750055F02B /* WICRS_ClientApp.swift in Sources */,
+				E6307669278BF81D0055F02B /* Channel.swift in Sources */,
+				E6307659278BF4750055F02B /* App.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -185,8 +208,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E6307670278BFC820055F02B /* Hub.swift in Sources */,
+				E630766D278BF9DF0055F02B /* Permission.swift in Sources */,
 				E630765C278BF4750055F02B /* ContentView.swift in Sources */,
-				E630765A278BF4750055F02B /* WICRS_ClientApp.swift in Sources */,
+				E630766A278BF81D0055F02B /* Channel.swift in Sources */,
+				E630765A278BF4750055F02B /* App.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

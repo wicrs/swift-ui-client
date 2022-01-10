@@ -14,4 +14,7 @@ struct WICRS_ClientApp: App {
             ContentView()
         }
     }
+    static func main() {
+        print("Test")
+    }
 }
