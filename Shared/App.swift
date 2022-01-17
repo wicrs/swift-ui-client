@@ -12,6 +12,10 @@ typealias DateString = String
 typealias HubPermString = String
 typealias ChannelPermString = String
 
+enum ClientError: Error {
+    case EmptyResponse
+}
+
 @main
 struct WICRS_ClientApp: App {
     var body: some Scene {

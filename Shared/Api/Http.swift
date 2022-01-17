@@ -134,6 +134,8 @@ struct HttpResponse<T: Decodable>: Decodable {
     }
 }
 
+struct EmptyResponse: Error {}
+
 class HttpClient {
     let base_url: String
     let user_id: UUIDString
@@ -143,7 +145,7 @@ class HttpClient {
         self.user_id = user_id
     }
     
-    public func request<R: Codable, T: Codable>(endpoint: String, method: String, data: R?) throws -> HttpResponse<T>? {
+    public func request<R: Codable, T: Codable>(endpoint: String, method: String, data: R?) throws -> T {
         var url_requset = URLRequest.init(url: URL.init(string: base_url + endpoint)!)
         url_requset.httpMethod = method
         url_requset.addValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -154,9 +156,12 @@ class HttpClient {
         }
         
         var result: HttpResponse<T>?
+        var httperror: Error? = nil
         let semaphore = DispatchSemaphore(value: 0)
         let task = URLSession.shared.dataTask(with: url_requset, completionHandler: { data, response, error in
             if let error = error {
+                httperror = error
+                result = nil
                 print("Error while trying to make http request: \(error)")
             } else {
                 if let data = data, let data_string = String(data: data, encoding: .utf8) {
@@ -164,6 +169,7 @@ class HttpClient {
                         print(data_string)
                         result = try JSONDecoder().decode(HttpResponse<T>.self, from: data)
                     } catch {
+                        httperror = error
                         print("Error while decoding HTTP JSON response: \(error)")
                         result = nil
                     }
@@ -176,38 +182,47 @@ class HttpClient {
         
         task.resume()
         _ = semaphore.wait(timeout: DispatchTime.distantFuture)
-        return result
+        
+        if let error = httperror {
+            throw error
+        }
+        
+        if let result = result?.success {
+            return result
+        } else {
+            throw ClientError.EmptyResponse
+        }
     }
     
-    public func get<R: Codable, T: Codable>(endpoint: String, data: R) throws -> HttpResponse<T>? {
+    public func get<R: Codable, T: Codable>(endpoint: String, data: R) throws -> T {
         try self.request(endpoint: endpoint, method: "GET", data: data)
     }
     
-    public func post<R: Codable, T: Codable>(endpoint: String, data: R) throws -> HttpResponse<T>? {
+    public func post<R: Codable, T: Codable>(endpoint: String, data: R) throws -> T {
         try self.request(endpoint: endpoint, method: "POST", data: data)
     }
     
-    public func put<R: Codable, T: Codable>(endpoint: String, data: R) throws -> HttpResponse<T>? {
+    public func put<R: Codable, T: Codable>(endpoint: String, data: R) throws -> T {
         try self.request(endpoint: endpoint, method: "PUT", data: data)
     }
     
-    public func delete<R: Codable, T: Codable>(endpoint: String, data: R) throws -> HttpResponse<T>? {
+    public func delete<R: Codable, T: Codable>(endpoint: String, data: R) throws -> T {
         try self.request(endpoint: endpoint, method: "DELETE", data: data)
     }
     
-    public func get<T: Codable>(endpoint: String) throws -> HttpResponse<T>? {
+    public func get<T: Codable>(endpoint: String) throws -> T {
         try self.request(endpoint: endpoint, method: "GET", data: Optional<UInt8>.none)
     }
     
-    public func post<T: Codable>(endpoint: String) throws -> HttpResponse<T>? {
+    public func post<T: Codable>(endpoint: String) throws -> T {
         try self.request(endpoint: endpoint, method: "POST", data: Optional<UInt8>.none)
     }
     
-    public func put<T: Codable>(endpoint: String) throws -> HttpResponse<T>? {
+    public func put<T: Codable>(endpoint: String) throws -> T {
         try self.request(endpoint: endpoint, method: "PUT", data: Optional<UInt8>.none)
     }
     
-    public func delete<T: Codable>(endpoint: String) throws -> HttpResponse<T>? {
+    public func delete<T: Codable>(endpoint: String) throws -> T {
         try self.request(endpoint: endpoint, method: "DELETE", data: Optional<UInt8>.none)
     }
 }
