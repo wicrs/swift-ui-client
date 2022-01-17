@@ -7,19 +7,19 @@
 
 import Foundation
 
-public struct Message {
-    public let id: UUID
-    public let hub_id: UUID
-    public let channel_id: UUID
-    public let sender: UUID
-    public let created: Date
-    public let content: String
+struct Message : Codable {
+    let id: UUIDString
+    let hub_id: UUIDString
+    let channel_id: UUIDString
+    let sender: UUIDString
+    let created: DateString
+    let content: String
 }
 
-public struct Channel {
-    public let id: UUID
-    public let hub_id: UUID
-    public var description: String
-    public var name: String
-    public let created: Date
+struct Channel : Codable {
+    let id: UUIDString
+    let hub_id: UUIDString
+    var description: String
+    var name: String
+    let created: DateString
 }

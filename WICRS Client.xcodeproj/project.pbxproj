@@ -19,6 +19,8 @@
 		E630766D278BF9DF0055F02B /* Permission.swift in Sources */ = {isa = PBXBuildFile; fileRef = E630766B278BF9DF0055F02B /* Permission.swift */; };
 		E630766F278BFC820055F02B /* Hub.swift in Sources */ = {isa = PBXBuildFile; fileRef = E630766E278BFC820055F02B /* Hub.swift */; };
 		E6307670278BFC820055F02B /* Hub.swift in Sources */ = {isa = PBXBuildFile; fileRef = E630766E278BFC820055F02B /* Hub.swift */; };
+		E63F4EB6278D3660003799D3 /* Http.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63F4EB5278D3660003799D3 /* Http.swift */; };
+		E63F4EB7278D3660003799D3 /* Http.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63F4EB5278D3660003799D3 /* Http.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +33,7 @@
 		E6307668278BF81D0055F02B /* Channel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Channel.swift; sourceTree = "<group>"; };
 		E630766B278BF9DF0055F02B /* Permission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Permission.swift; sourceTree = "<group>"; };
 		E630766E278BFC820055F02B /* Hub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hub.swift; sourceTree = "<group>"; };
+		E63F4EB5278D3660003799D3 /* Http.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Http.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +96,7 @@
 			children = (
 				E6307668278BF81D0055F02B /* Channel.swift */,
 				E630766E278BFC820055F02B /* Hub.swift */,
+				E63F4EB5278D3660003799D3 /* Http.swift */,
 				E630766B278BF9DF0055F02B /* Permission.swift */,
 			);
 			path = Api;
@@ -200,6 +204,7 @@
 				E630766C278BF9DF0055F02B /* Permission.swift in Sources */,
 				E630765B278BF4750055F02B /* ContentView.swift in Sources */,
 				E6307669278BF81D0055F02B /* Channel.swift in Sources */,
+				E63F4EB6278D3660003799D3 /* Http.swift in Sources */,
 				E6307659278BF4750055F02B /* App.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -212,6 +217,7 @@
 				E630766D278BF9DF0055F02B /* Permission.swift in Sources */,
 				E630765C278BF4750055F02B /* ContentView.swift in Sources */,
 				E630766A278BF81D0055F02B /* Channel.swift in Sources */,
+				E63F4EB7278D3660003799D3 /* Http.swift in Sources */,
 				E630765A278BF4750055F02B /* App.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
