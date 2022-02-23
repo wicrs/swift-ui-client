@@ -8,14 +8,17 @@
 import SwiftUI
 
 struct ContentView: View {
+    var hubs: [Hub]
+    
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        HubList(hubs: hubs)
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        Group {
+            ContentView(hubs: create_preview_hubs())
+        }
     }
 }

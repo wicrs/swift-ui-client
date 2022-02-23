@@ -16,7 +16,11 @@ struct HubMember : Codable {
     var channel_permissions: [UUIDString : ChannelPermissions]
 }
 
-struct PermissionGroup : Codable {
+extension HubMember : Identifiable {
+    var id: UUIDString { return user_id }
+}
+
+struct PermissionGroup : Codable, Identifiable {
     let id: UUIDString
     var name: String
     var hub_permissions: HubPermissions
@@ -24,7 +28,7 @@ struct PermissionGroup : Codable {
     let created: DateString
 }
 
-struct Hub : Codable {
+struct Hub : Codable, Identifiable {
     var channels: [UUIDString : Channel]
     var members: [UUIDString : HubMember]
     var bans: [UUIDString]
@@ -40,7 +44,7 @@ struct Hub : Codable {
 
 extension HttpClient {
     func create_hub(name: String, description: String?) throws -> UUIDString {
-        try self.post(endpoint: "/api/hub", data: HttpHubUpdate.init(name: "test", description: "testing", default_group: nil))
+        try self.post(endpoint: "/api/hub", data: HttpHubUpdate.init(name: name, description: description, default_group: nil))
     }
     
     func get_hub(hub_id: UUIDString) throws -> Hub {

@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Message : Codable {
+struct Message : Codable, Identifiable, Hashable {
     let id: UUIDString
     let hub_id: UUIDString
     let channel_id: UUIDString
@@ -16,12 +16,17 @@ struct Message : Codable {
     let content: String
 }
 
-struct Channel : Codable {
+struct Channel : Codable, Identifiable {
     let id: UUIDString
     let hub_id: UUIDString
     var description: String
     var name: String
     let created: DateString
+    var messages: [Message] = []
+    
+    enum CodingKeys: String, CodingKey {
+        case id, hub_id, description, name, created
+    }
 }
 
 extension HttpClient {

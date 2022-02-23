@@ -162,15 +162,12 @@ class HttpClient {
             if let error = error {
                 httperror = error
                 result = nil
-                print("Error while trying to make http request: \(error)")
             } else {
-                if let data = data, let data_string = String(data: data, encoding: .utf8) {
+                if let data = data {
                     do {
-                        print(data_string)
                         result = try JSONDecoder().decode(HttpResponse<T>.self, from: data)
                     } catch {
                         httperror = error
-                        print("Error while decoding HTTP JSON response: \(error)")
                         result = nil
                     }
                 } else {
