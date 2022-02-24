@@ -25,10 +25,10 @@ struct ChannelList: View {
 }
 #else
 struct ChannelList: View {
-    @Binding var channels: [Channel]
+    @Binding var channels: Dictionary<UUIDString, Channel>.Values
     
     var body: some View {
-        List($channels.sorted { $0.name.wrappedValue < $1.name.wrappedValue }) { channel in
+        List($channels.sorted { $0.name.wrappedValue.compare($1.name.wrappedValue, options: [.caseInsensitive, .numeric]) == ComparisonResult.orderedAscending }) { channel in
             NavigationLink {
                 ChannelView(channel: channel)
             } label: {

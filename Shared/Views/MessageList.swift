@@ -16,12 +16,14 @@ struct MessageList: View {
                 Text(message.content)
                 Spacer()
             }
+#if os(iOS)
+            .listRowBackground((index  % 2 == 0) ? Color(UIColor.systemBackground) : Color(UIColor.secondarySystemBackground))
+#endif
         }
 #if os(macOS)
         .listStyle(.inset(alternatesRowBackgrounds: true))
 #else
         .listStyle(GroupedListStyle())
-        .listRowBackground((index  % 2 == 0) ? Color.primary : Color.secondary)
 #endif
     }
 }
