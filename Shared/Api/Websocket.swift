@@ -49,21 +49,26 @@ extension WICRSClient {
 func handle_ws_message(_ result: Result<URLSessionWebSocketTask.Message, Error>) -> () {
     print("Got a Ws message.")
     WICRSClient.websocket.receive(completionHandler: handle_ws_message)
-    if case let .string(string) = try! result.get() {
-        let server_message = try! JSONDecoder.init().decode(WsServerMessage.self, from: string.data(using: .utf8)!)
-        switch server_message {
-            case let .Error(err):
-                print(err.localizedDescription)
-            case let .ChatMessage(sender_id: _, hub_id: hub_id, channel_id: channel_id, message_id: message_id, message: _):
-                
-                DispatchQueue.main.async {
-                    AppState.shared.hubs[hub_id]?.channels[channel_id]?.messages.append(try! WICRSClient.http_client.get_message(hub_id: hub_id, channel_id: channel_id, message_id: message_id))
-                }
-                print("New message! ID: \(message_id)")
-            default:
-                print("Ws message: \(string)")
+    do {
+        if case let .string(string) = try result.get() {
+            let server_message = try JSONDecoder.init().decode(WsServerMessage.self, from: string.data(using: .utf8)!)
+            switch server_message {
+                case let .Error(err):
+                    print(err.localizedDescription)
+                case let .ChatMessage(sender_id: _, hub_id: hub_id, channel_id: channel_id, message_id: message_id, message: _):
+                    
+                    DispatchQueue.main.async {
+                        AppState.shared.hubs[hub_id]?.channels[channel_id]?.messages.append(try! WICRSClient.http_client.get_message(hub_id: hub_id, channel_id: channel_id, message_id: message_id))
+                    }
+                    print("New message! ID: \(message_id)")
+                default:
+                    print("Ws message: \(string)")
+            }
         }
+    } catch {
+        print("Error from Ws read: \(error)")
     }
+    
     return
 }
 
