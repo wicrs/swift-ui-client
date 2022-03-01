@@ -24,7 +24,7 @@ struct ChannelView: View {
             ScrollViewReader { proxy in
                 MessageList(messages: $channel.messages)
                 TextField("", text: $new_message, prompt: Text("New message...")).onSubmit {
-                    let _ = try! WICRSClient.http_client.send_message(hub_id: channel.hub_id, channel_id: channel.id, content: new_message)                    
+                    let _ = try! WICRSClient.http_client.send_message(hub_id: channel.hub_id, channel_id: channel.id, content: new_message)
                     new_message = ""
                 }
             }

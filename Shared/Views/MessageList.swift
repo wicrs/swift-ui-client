@@ -11,22 +11,31 @@ struct MessageList: View {
     @Binding var messages: [Message]
     
     var body: some View {
+#if os(macOS)
         List(messages.sorted { $0.created.compare($1.created, options: [.caseInsensitive, .numeric]) == ComparisonResult.orderedAscending }) { message in
             HStack {
                 Text(message.content)
                 Spacer()
             }
-#if os(iOS)
-            .listRowBackground((index  % 2 == 0) ? Color(UIColor.systemBackground) : Color(UIColor.secondarySystemBackground))
-#endif
+            
         }
-#if os(macOS)
         .listStyle(.inset(alternatesRowBackgrounds: true))
+        .listStyle(GroupedListStyle())
 #else
+        List {
+            ForEach(Array(messages.sorted { $0.created.compare($1.created, options: [.caseInsensitive, .numeric]) == ComparisonResult.orderedAscending }.enumerated()), id: \.offset) { index, message in
+                HStack {
+                    Text(message.content)
+                    Spacer()
+                }.listRowBackground((index % 2 == 0) ? Color(UIColor.systemBackground) : Color(UIColor.secondarySystemBackground))
+            }
+        }
         .listStyle(GroupedListStyle())
 #endif
     }
 }
+
+
 
 func message_date_compare(a: Message, b: Message) throws -> Bool {
     let date_a = try Date.init(a.created, strategy: .iso8601)
