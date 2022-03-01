@@ -23,13 +23,10 @@ struct ChannelView: View {
             }
             ScrollViewReader { proxy in
                 MessageList(messages: $channel.messages)
-//                    .onAppear {
-//                    proxy.scrollTo(channel.messages[channel.messages.endIndex - 1].id)
-//                }
                 TextField("", text: $new_message, prompt: Text("New message...")).onSubmit {
-                    let message = Message.init(id: UUID.init().uuidString, hub_id: channel.hub_id, channel_id: channel.id, sender: WICRSClient.user_id, created: Date.now.ISO8601Format(), content: new_message)
-                    channel.messages.append(message)
-                    proxy.scrollTo(message.id)
+                    let id = try! WICRSClient.http_client.send_message(hub_id: channel.hub_id, channel_id: channel.id, content: new_message)
+                    print("New message! \(id)")
+                    
                     new_message = ""
                 }
             }

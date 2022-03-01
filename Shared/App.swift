@@ -5,6 +5,8 @@
 //  Created by Willem Leitso on 2022-01-09.
 //
 
+import CFNetwork
+import Foundation
 import SwiftUI
 
 typealias UUIDString = String
@@ -20,10 +22,15 @@ typealias UUIDPair = String
 typealias MessageMap = [UUIDPair : [Message]]
 
 class AppState: ObservableObject {
-    @Published var hubs: [Hub]
+    static var shared = AppState()
+    @Published var is_waiting: Bool = false
+    @Published var hubs: [UUIDString : Hub]
     
     init() {
-        hubs = []
+        hubs = [:]
+        WICRSClient.websocket.send(.string(WICRSClient.user_id), completionHandler: {err in
+            print("logged in ws")
+        })
         create_hubs(hubs: &hubs)
         create_messages(hubs: &hubs)
     }
@@ -34,7 +41,13 @@ struct WICRSClient: App {
     static let user_id = UUID.init().uuidString
     static var http_client = HttpClient(base_url: "http://0.0.0.0:8080", user_id: user_id)
     static var websocket = http_client.websocket()
-    @StateObject var state = AppState()
+    @StateObject var state = AppState.shared
+    
+    init() {
+        DispatchQueue.main.async {
+            AppState.shared.listen()
+        }
+    }
     
     var body: some Scene {
         WindowGroup {
@@ -43,7 +56,7 @@ struct WICRSClient: App {
     }
 }
 
-func create_hubs(hubs: inout [Hub]) {
+func create_hubs(hubs: inout [UUIDString:Hub]) {
     for i in 1...2 {
         let hub_id = try! WICRSClient.http_client.create_hub(name: "Test \(i)", description: "Testing hub description for 'Test \(i)'.")
         let hub = try! WICRSClient.http_client.get_hub(hub_id: hub_id)
@@ -52,17 +65,17 @@ func create_hubs(hubs: inout [Hub]) {
             WICRSClient.subscribe_channel(hub_id: hub_id, channel_id: channel_id)
         }
         WICRSClient.subscribe_hub(hub_id: hub_id)
-        hubs.append(hub)
+        hubs[hub_id] = hub
     }
 }
 
-func create_messages(hubs: inout [Hub]) {
-    for (num, hub) in hubs.enumerated() {
+func create_messages(hubs: inout [UUIDString:Hub]) {
+    for hub in hubs.values {
         for channel in hub.channels.values {
             for i in 1...20 {
                 let message_id = try! WICRSClient.http_client.send_message(hub_id: hub.id, channel_id: channel.id, content: "Test message number \(i).")
                 let message = try! WICRSClient.http_client.get_message(hub_id: hub.id, channel_id: channel.id, message_id: message_id)
-                hubs[num].channels[channel.id]!.messages.append(message)
+                hubs[hub.id]!.channels[channel.id]!.messages.append(message)
             }
         }
     }
@@ -99,10 +112,11 @@ func create_preview_hub(discriminator: String = "1") -> Hub {
     return hub
 }
 
-func create_preview_hubs() -> [Hub] {
-    var hubs: [Hub] = []
+func create_preview_hubs() -> [UUIDString:Hub] {
+    var hubs: [UUIDString:Hub] = [:]
     for i in 1...10 {
-        hubs.append(create_preview_hub(discriminator: "\(i)"))
+        let hub = create_preview_hub(discriminator: "\(i)")
+        hubs[hub.id] = hub
     }
     return hubs
 }

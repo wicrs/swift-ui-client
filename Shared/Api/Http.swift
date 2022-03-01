@@ -146,31 +146,37 @@ class HttpClient {
     }
     
     func url_request(endpoint: String, method: String) -> URLRequest {
-        var url_requset = URLRequest.init(url: URL.init(string: base_url + endpoint)!)
-        url_requset.httpMethod = method
-        url_requset.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        url_requset.addValue(self.user_id/*.uuidString*/, forHTTPHeaderField: "Authorization")
-        return url_requset
+        var url_request = URLRequest.init(url: URL.init(string: base_url + endpoint)!)
+        url_request.httpMethod = method
+        url_request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        url_request.addValue(self.user_id/*.uuidString*/, forHTTPHeaderField: "Authorization")
+        return url_request
     }
     
     public func websocket() -> URLSessionWebSocketTask {
         let url_session = URLSession.init(configuration: URLSessionConfiguration.default)
-        let url_request = url_request(endpoint: "api/websocket", method: "GET")
+        var url_request = URLRequest.init(url: URL.init(string: "ws://0.0.0.0:8080/api/websocket")!)
+        url_request.httpMethod = "GET"
+        url_request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        url_request.addValue(self.user_id/*.uuidString*/, forHTTPHeaderField: "Authorization")
         let websocket = url_session.webSocketTask(with: url_request)
+        print("ws running")
+        websocket.resume()
+        print(websocket.state == .running)
         return websocket
     }
     
     public func request<R: Codable, T: Codable>(endpoint: String, method: String, data: R?) throws -> T {
-        var url_requset = url_request(endpoint: endpoint, method: method)
+        var url_request = url_request(endpoint: endpoint, method: method)
         
         if data != nil {
-            url_requset.httpBody = try JSONEncoder().encode(data)
+            url_request.httpBody = try JSONEncoder().encode(data)
         }
         
         var result: HttpResponse<T>?
         var httperror: Error? = nil
         let semaphore = DispatchSemaphore(value: 0)
-        let task = URLSession.shared.dataTask(with: url_requset, completionHandler: { data, response, error in
+        let task = URLSession.shared.dataTask(with: url_request, completionHandler: { data, response, error in
             if let error = error {
                 httperror = error
                 result = nil

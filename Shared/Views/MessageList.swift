@@ -11,7 +11,7 @@ struct MessageList: View {
     @Binding var messages: [Message]
     
     var body: some View {
-        List(Array((try! messages.sorted(by: message_date_compare)).enumerated()), id: \.element) { index, message in
+        List(messages.sorted { $0.created.compare($1.created, options: [.caseInsensitive, .numeric]) == ComparisonResult.orderedAscending }) { message in
             HStack {
                 Text(message.content)
                 Spacer()

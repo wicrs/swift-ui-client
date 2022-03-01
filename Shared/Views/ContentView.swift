@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State var hubs: [Hub]
+    @State var hubs: [UUIDString:Hub]
     
     var body: some View {
         HubList(hubs: $hubs)

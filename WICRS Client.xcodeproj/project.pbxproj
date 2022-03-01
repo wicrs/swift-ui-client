@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		E61FA2B327CD6745003AE9FA /* Websocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61FA2B227CD6745003AE9FA /* Websocket.swift */; };
 		E61FA2B427CD6745003AE9FA /* Websocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61FA2B227CD6745003AE9FA /* Websocket.swift */; };
+		E61FA2B727CDF754003AE9FA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E61FA2B627CDF754003AE9FA /* Foundation.framework */; };
+		E61FA2B927CDF759003AE9FA /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E61FA2B827CDF759003AE9FA /* SwiftUI.framework */; };
+		E61FA2BB27CDF7EA003AE9FA /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E61FA2BA27CDF7EA003AE9FA /* CFNetwork.framework */; platformFilter = maccatalyst; };
 		E6307659278BF4750055F02B /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6307649278BF4740055F02B /* App.swift */; };
 		E630765A278BF4750055F02B /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6307649278BF4740055F02B /* App.swift */; };
 		E630765B278BF4750055F02B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E630764A278BF4740055F02B /* ContentView.swift */; };
@@ -41,6 +44,9 @@
 
 /* Begin PBXFileReference section */
 		E61FA2B227CD6745003AE9FA /* Websocket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Websocket.swift; sourceTree = "<group>"; };
+		E61FA2B627CDF754003AE9FA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		E61FA2B827CDF759003AE9FA /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		E61FA2BA27CDF7EA003AE9FA /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		E6307649278BF4740055F02B /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		E630764A278BF4740055F02B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		E630764B278BF4750055F02B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -72,18 +78,32 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E61FA2BB27CDF7EA003AE9FA /* CFNetwork.framework in Frameworks */,
+				E61FA2B927CDF759003AE9FA /* SwiftUI.framework in Frameworks */,
+				E61FA2B727CDF754003AE9FA /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E61FA2B527CDF754003AE9FA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E61FA2BA27CDF7EA003AE9FA /* CFNetwork.framework */,
+				E61FA2B827CDF759003AE9FA /* SwiftUI.framework */,
+				E61FA2B627CDF754003AE9FA /* Foundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		E6307643278BF4740055F02B = {
 			isa = PBXGroup;
 			children = (
 				E6307648278BF4740055F02B /* Shared */,
 				E6307657278BF4750055F02B /* macOS */,
 				E6307651278BF4750055F02B /* Products */,
+				E61FA2B527CDF754003AE9FA /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};

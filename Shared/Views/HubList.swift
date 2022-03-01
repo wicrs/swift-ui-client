@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct HubList: View {
-    @Binding var hubs: [Hub]
+    @Binding var hubs: [UUIDString:Hub]
     
     var body: some View {
         NavigationView {
-            List($hubs) { hub in
+            List($hubs.values.sorted { $0.name.wrappedValue.compare($1.name.wrappedValue, options: [.caseInsensitive, .numeric]) == ComparisonResult.orderedAscending }) { hub in
                 NavigationLink {
                     ChannelList(channels: hub.channels.values)
                 } label: {
