@@ -19,45 +19,53 @@ enum ClientError: Error {
 typealias UUIDPair = String
 typealias MessageMap = [UUIDPair : [Message]]
 
+class AppState: ObservableObject {
+    @Published var hubs: [Hub]
+    
+    init() {
+        hubs = []
+        create_hubs(hubs: &hubs)
+        create_messages(hubs: &hubs)
+    }
+}
+
 @main
 struct WICRSClient: App {
     static let user_id = UUID.init().uuidString
     static var http_client = HttpClient(base_url: "http://0.0.0.0:8080", user_id: user_id)
-    static var hubs: [Hub] = create_preview_hubs()
+    static var websocket = http_client.websocket()
+    @StateObject var state = AppState()
     
     var body: some Scene {
         WindowGroup {
-            ContentView(hubs: WICRSClient.hubs)
+            ContentView(hubs: state.hubs)
         }
     }
 }
 
-func create_hubs() -> [Hub] {
-    var hubs: [Hub] = []
-    for i in 1...10 {
+func create_hubs(hubs: inout [Hub]) {
+    for i in 1...2 {
         let hub_id = try! WICRSClient.http_client.create_hub(name: "Test \(i)", description: "Testing hub description for 'Test \(i)'.")
-        for i in 1...10 {
-            let _ = try! WICRSClient.http_client.create_channel(hub_id: hub_id, channel: HttpChannelUpdate.init(name: "Test \(i)", description: "Testing channel description for 'Test \(i)'."))
-        }
         let hub = try! WICRSClient.http_client.get_hub(hub_id: hub_id)
+        for i in 1...3 {
+            let channel_id = try! WICRSClient.http_client.create_channel(hub_id: hub_id, channel: HttpChannelUpdate.init(name: "Test \(i)", description: "Testing channel description for 'Test \(i)'."))
+            WICRSClient.subscribe_channel(hub_id: hub_id, channel_id: channel_id)
+        }
+        WICRSClient.subscribe_hub(hub_id: hub_id)
         hubs.append(hub)
     }
-    return hubs
 }
 
-func create_messages() -> MessageMap {
-    var messages: MessageMap = [:]
-    for hub in WICRSClient.hubs {
+func create_messages(hubs: inout [Hub]) {
+    for (num, hub) in hubs.enumerated() {
         for channel in hub.channels.values {
-            let pair = hub.id + channel.id
-            for i in 1...10 {
+            for i in 1...20 {
                 let message_id = try! WICRSClient.http_client.send_message(hub_id: hub.id, channel_id: channel.id, content: "Test message number \(i).")
                 let message = try! WICRSClient.http_client.get_message(hub_id: hub.id, channel_id: channel.id, message_id: message_id)
-                messages[pair]?.append(message)
+                hubs[num].channels[channel.id]!.messages.append(message)
             }
         }
     }
-    return messages
 }
 
 func create_preview_message(discriminator: String = "1", hub_id: UUIDString = "00000000-0000-0000-0000-00000000000", channel_id: UUIDString = "00000000-0000-0000-0000-00000000000", sender_id: UUIDString = "00000000-0000-0000-0000-00000000000") -> Message {

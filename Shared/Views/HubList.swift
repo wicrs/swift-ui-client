@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct HubList: View {
-    @State var hubs: [Hub]
+    @Binding var hubs: [Hub]
     
     var body: some View {
         NavigationView {
@@ -23,8 +23,17 @@ struct HubList: View {
     }
 }
 
+#if (DEBUG)
 struct HubList_Previews: PreviewProvider {
     static var previews: some View {
-        HubList(hubs: create_preview_hubs())
+        HubListPreviewWrapper()
     }
 }
+
+struct HubListPreviewWrapper: View {
+    @State var hubs = create_preview_hubs()
+    var body: some View {
+        HubList(hubs: $hubs)
+    }
+}
+#endif

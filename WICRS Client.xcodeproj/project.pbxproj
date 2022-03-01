@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E61FA2B327CD6745003AE9FA /* Websocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61FA2B227CD6745003AE9FA /* Websocket.swift */; };
+		E61FA2B427CD6745003AE9FA /* Websocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61FA2B227CD6745003AE9FA /* Websocket.swift */; };
 		E6307659278BF4750055F02B /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6307649278BF4740055F02B /* App.swift */; };
 		E630765A278BF4750055F02B /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6307649278BF4740055F02B /* App.swift */; };
 		E630765B278BF4750055F02B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E630764A278BF4740055F02B /* ContentView.swift */; };
@@ -38,6 +40,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E61FA2B227CD6745003AE9FA /* Websocket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Websocket.swift; sourceTree = "<group>"; };
 		E6307649278BF4740055F02B /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		E630764A278BF4740055F02B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		E630764B278BF4750055F02B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -117,6 +120,7 @@
 			children = (
 				E6307668278BF81D0055F02B /* Channel.swift */,
 				E630766E278BFC820055F02B /* Hub.swift */,
+				E61FA2B227CD6745003AE9FA /* Websocket.swift */,
 				E63F4EB5278D3660003799D3 /* Http.swift */,
 				E630766B278BF9DF0055F02B /* Permission.swift */,
 			);
@@ -249,6 +253,7 @@
 				E6307669278BF81D0055F02B /* Channel.swift in Sources */,
 				E63F4EB6278D3660003799D3 /* Http.swift in Sources */,
 				E6307659278BF4750055F02B /* App.swift in Sources */,
+				E61FA2B327CD6745003AE9FA /* Websocket.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -269,6 +274,7 @@
 				E630766A278BF81D0055F02B /* Channel.swift in Sources */,
 				E63F4EB7278D3660003799D3 /* Http.swift in Sources */,
 				E630765A278BF4750055F02B /* App.swift in Sources */,
+				E61FA2B427CD6745003AE9FA /* Websocket.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

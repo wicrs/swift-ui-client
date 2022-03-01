@@ -30,8 +30,10 @@ struct HubView: View {
     }
 }
 
+#if (DEBUG)
 struct HubView_Previews: PreviewProvider {
     static var previews: some View {
         HubView(hub: create_preview_hub())
     }
 }
+#endif

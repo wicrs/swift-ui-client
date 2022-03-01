@@ -17,6 +17,7 @@ struct ChannelRow: View {
     }
 }
 
+#if (DEBUG)
 struct ChannelRowPreviewWrapper: View {
     @State var channel = create_preview_channel()
     
@@ -29,3 +30,4 @@ struct ChannelRow_Previews: PreviewProvider {
         ChannelRowPreviewWrapper(channel: create_preview_channel())
     }
 }
+#endif

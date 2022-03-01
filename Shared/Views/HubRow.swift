@@ -18,6 +18,7 @@ struct HubRow: View {
     }
 }
 
+#if (DEBUG)
 struct HubRow_Previews: PreviewProvider {
     static var previews: some View {
         HubRowPreviewWrapper()
@@ -30,3 +31,4 @@ struct HubRowPreviewWrapper: View {
         HubRow(hub: $hub)
     }
 }
+#endif

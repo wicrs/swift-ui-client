@@ -28,6 +28,13 @@ struct MessageList: View {
     }
 }
 
+func message_date_compare(a: Message, b: Message) throws -> Bool {
+    let date_a = try Date.init(a.created, strategy: .iso8601)
+    let date_b = try Date.init(b.created, strategy: .iso8601)
+    return date_a.compare(date_b) == .orderedAscending
+}
+
+#if (DEBUG)
 struct MessageListPreviewWrapper: View {
     @State var messages = create_preview_channel().messages
     
@@ -41,11 +48,6 @@ struct MessageList_Previews: PreviewProvider {
         MessageListPreviewWrapper()
     }
 }
-
-func message_date_compare(a: Message, b: Message) throws -> Bool {
-    let date_a = try Date.init(a.created, strategy: .iso8601)
-    let date_b = try Date.init(b.created, strategy: .iso8601)
-    return date_a.compare(date_b) == .orderedAscending
-}
+#endif
 
 

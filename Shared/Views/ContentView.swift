@@ -8,17 +8,25 @@
 import SwiftUI
 
 struct ContentView: View {
-    var hubs: [Hub]
+    @State var hubs: [Hub]
     
     var body: some View {
-        HubList(hubs: hubs)
+        HubList(hubs: $hubs)
     }
 }
 
+#if (DEBUG)
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        Group {
-            ContentView(hubs: create_preview_hubs())
-        }
+        ContentViewPreviewWrapper()
     }
 }
+
+struct ContentViewPreviewWrapper: View {
+    @State var hubs = create_preview_hubs()
+    
+    var body: some View {
+        ContentView(hubs: hubs)
+    }
+}
+#endif

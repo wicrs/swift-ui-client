@@ -39,6 +39,7 @@ struct ChannelList: View {
 }
 #endif
 
+#if (DEBUG)
 struct ChannelList_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
@@ -54,3 +55,4 @@ struct ChannelListPreviewWrapper: View {
         ChannelList(channels: $channels)
     }
 }
+#endif
