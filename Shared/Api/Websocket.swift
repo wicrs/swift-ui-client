@@ -47,35 +47,29 @@ extension WICRSClient {
 }
 
 func handle_ws_message(_ result: Result<URLSessionWebSocketTask.Message, Error>) -> () {
-    print("got a ws msg")
-    DispatchQueue.main.async {
-        AppState.shared.is_waiting = false
-    }
-    if case let .data(data) = try! result.get() {
-        let server_message = try! JSONDecoder.init().decode(WsServerMessage.self, from: data)
+    print("Got a Ws message.")
+    WICRSClient.websocket.receive(completionHandler: handle_ws_message)
+    if case let .string(string) = try! result.get() {
+        let server_message = try! JSONDecoder.init().decode(WsServerMessage.self, from: string.data(using: .utf8)!)
         switch server_message {
             case let .Error(err):
                 print(err.localizedDescription)
             case let .ChatMessage(sender_id: _, hub_id: hub_id, channel_id: channel_id, message_id: message_id, message: _):
-                Task {
-                    AppState.shared.hubs[hub_id]?.channels[channel_id]?.messages.append(try! await WICRSClient.http_client.get_message(hub_id: hub_id, channel_id: channel_id, message_id: message_id))
-                    print("new message!")
+                
+                DispatchQueue.main.async {
+                    AppState.shared.hubs[hub_id]?.channels[channel_id]?.messages.append(try! WICRSClient.http_client.get_message(hub_id: hub_id, channel_id: channel_id, message_id: message_id))
                 }
+                print("New message! ID: \(message_id)")
             default:
-                print("default...")
+                print("Ws message: \(string)")
         }
-    } else if case let .string(string) = try! result.get() {
-        print(string)
     }
+    return
 }
 
 extension AppState {
     func listen() {
-        while WICRSClient.websocket.state == .running && !AppState.shared.is_waiting {
-            AppState.shared.is_waiting = true
-            WICRSClient.websocket.receive(completionHandler: handle_ws_message)
-            print("listening some more")
-        }
+        WICRSClient.websocket.receive(completionHandler: handle_ws_message)
     }
 }
 
