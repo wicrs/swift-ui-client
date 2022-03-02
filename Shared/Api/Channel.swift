@@ -53,15 +53,15 @@ extension HttpClient {
     }
     
     func get_messages_after(hub_id: UUIDString, channel_id: UUIDString, message_id: UUIDString, max: UInt) throws -> [Message] {
-        try self.get(endpoint: "/api/message/\(hub_id)/\(channel_id)/after", data: HttpMessagesAfterQuery.init(from: message_id, max: max))
+        try self.get(endpoint: "/api/message/\(hub_id)/\(channel_id)/after?from=\(message_id)&max=\(max)")
     }
     
     func get_messages_before(hub_id: UUIDString, channel_id: UUIDString, message_id: UUIDString, max: UInt) throws -> [Message] {
-        try self.get(endpoint: "/api/message/\(hub_id)/\(channel_id)/before", data: HttpMesssagesBeforeQuery.init(to: message_id, max: max))
+        try self.get(endpoint: "/api/message/\(hub_id)/\(channel_id)/before?to=\(message_id)&max=\(max)")
     }
     
     func get_messages_last(hub_id: UUIDString, channel_id: UUIDString, max: UInt) throws -> [Message] {
-        try self.get(endpoint: "/api/message/\(hub_id)/\(channel_id)/last", data: HttpLastMessagesQuery.init(max: max))
+        try self.get(endpoint: "/api/message/\(hub_id)/\(channel_id)/last?max=\(max)")
     }
     
     func send_message(hub_id: UUIDString, channel_id: UUIDString, content: String) throws -> UUIDString {

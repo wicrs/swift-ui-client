@@ -20,7 +20,6 @@ struct MessageList: View {
             
         }
         .listStyle(.inset(alternatesRowBackgrounds: true))
-        .listStyle(GroupedListStyle())
 #else
         List {
             ForEach(Array(messages.sorted { $0.created.compare($1.created, options: [.caseInsensitive, .numeric]) == ComparisonResult.orderedAscending }.enumerated()), id: \.offset) { index, message in

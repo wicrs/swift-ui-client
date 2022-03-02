@@ -160,9 +160,7 @@ class HttpClient {
         url_request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         url_request.addValue(self.user_id/*.uuidString*/, forHTTPHeaderField: "Authorization")
         let websocket = url_session.webSocketTask(with: url_request)
-        print("ws running")
         websocket.resume()
-        print(websocket.state == .running)
         return websocket
     }
     
@@ -207,10 +205,6 @@ class HttpClient {
         } else {
             throw ClientError.EmptyResponse
         }
-    }
-    
-    public func get<R: Codable, T: Codable>(endpoint: String, data: R) throws -> T {
-        try self.request(endpoint: endpoint, method: "GET", data: data)
     }
     
     public func post<R: Codable, T: Codable>(endpoint: String, data: R) throws -> T {
