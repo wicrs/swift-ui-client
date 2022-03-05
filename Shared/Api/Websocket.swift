@@ -9,85 +9,65 @@ import Foundation
 import SwiftUI
 
 extension WICRSClient {
-    static func subscribe_hub(hub_id: UUIDString) {
-        WICRSClient.websocket.send(.string("{\"SubscribeHub\":{\"hub_id\":\"\(hub_id)\"}}"), completionHandler: {err in
-            if err != nil {
-                print(err!.localizedDescription)
-                exit(1)
-            }
-        })
+    static func subscribe_hub(hub_id: UUIDString) async throws {
+        try await WICRSClient.websocket.send(.string("{\"SubscribeHub\":{\"hub_id\":\"\(hub_id)\"}}"))
     }
     
-    static func unsubscribe_hub(hub_id: UUIDString) {
-        WICRSClient.websocket.send(.string("{\"UnsubscribeHub\":{\"hub_id\":\"\(hub_id)\"}}"), completionHandler: {err in
-            if err != nil {
-                print(err!.localizedDescription)
-                exit(1)
-            }
-        })
+    static func unsubscribe_hub(hub_id: UUIDString) async throws {
+        try await WICRSClient.websocket.send(.string("{\"UnsubscribeHub\":{\"hub_id\":\"\(hub_id)\"}}"))
     }
     
-    static func subscribe_channel(hub_id: UUIDString, channel_id: UUIDString) {
-        WICRSClient.websocket.send(.string("{\"SubscribeChannel\":{\"hub_id\":\"\(hub_id)\",\"channel_id\":\"\(channel_id)\"}}"), completionHandler: {err in
-            if err != nil {
-                print(err!.localizedDescription)
-                exit(1)
-            }
-        })
+    static func subscribe_channel(hub_id: UUIDString, channel_id: UUIDString) async throws {
+        try await WICRSClient.websocket.send(.string("{\"SubscribeChannel\":{\"hub_id\":\"\(hub_id)\",\"channel_id\":\"\(channel_id)\"}}"))
     }
     
-    static func unsubscribe_channel(hub_id: UUIDString, channel_id: UUIDString) {
-        WICRSClient.websocket.send(.string("{\"UnsubscribeChannel\":{\"hub_id\":\"\(hub_id)\",\"channel_id\":\"\(channel_id)\"}}"), completionHandler: {err in
-            if err != nil {
-                print(err!.localizedDescription)
-                exit(1)
-            }
-        })
+    static func unsubscribe_channel(hub_id: UUIDString, channel_id: UUIDString) async throws {
+        try await WICRSClient.websocket.send(.string("{\"UnsubscribeChannel\":{\"hub_id\":\"\(hub_id)\",\"channel_id\":\"\(channel_id)\"}}"))
     }
 }
 
-func handle_ws_message(_ result: Result<URLSessionWebSocketTask.Message, Error>) -> () {
-    switch result {
-        case let .success(message):
-            WICRSClient.websocket.receive(completionHandler: handle_ws_message)
-            
-            if case let .string(string) = message {
-                do {
-                    let server_message = try JSONDecoder.init().decode(WsServerMessage.self, from: string.data(using: .utf8)!)
-                    switch server_message {
-                        case let .Error(err):
-                            print("API error: \(err)")
-                        case let .ChatMessage(sender_id: _, hub_id: hub_id, channel_id: channel_id, message_id: message_id, message: _):
-                            DispatchQueue.main.async {
-                                do {
-                                    AppState.shared.hubs[hub_id]?.channels[channel_id]?.messages.append(try WICRSClient.http_client.get_message(hub_id: hub_id, channel_id: channel_id, message_id: message_id))
-                                } catch {
-                                    print("Error getting message from server: \(error)")
-                                }
-                            }
-                            print("New message! ID: \(message_id)")
-                        default:
-                            print("Ws message: \(server_message)")
-                    }
-                } catch {
-                    print("Error parsing Ws message: \(error)")
-                }
-            }
-        case let .failure(error):
-            print("Error receiving Ws message: \(error)")
-            if WICRSClient.websocket.state == .running {
+extension WICRSClient {
+    func handle_ws_message(_ result: Result<URLSessionWebSocketTask.Message, Error>) -> () {
+        switch result {
+            case let .success(message):
                 WICRSClient.websocket.receive(completionHandler: handle_ws_message)
-            } else {
-                print("Websocket closed.")
-            }
-    }
-    
-    return
-}
-
-extension AppState {
-    func listen() {
-        WICRSClient.websocket.receive(completionHandler: handle_ws_message)
+                
+                if case let .string(string) = message {
+                    do {
+                        let server_message = try JSONDecoder.init().decode(WsServerMessage.self, from: string.data(using: .utf8)!)
+                        switch server_message {
+                            case let .Error(err):
+                                print("API error: \(err)")
+                            case let .ChatMessage(sender_id: _, hub_id: hub_id, channel_id: channel_id, message_id: message_id, message: _):
+                                DispatchQueue.main.async {
+                                    do {
+                                        AppState.shared.hubs[hub_id]?.channels[channel_id]?.messages.append(try WICRSClient.http_client.get_message(hub_id: hub_id, channel_id: channel_id, message_id: message_id))
+                                        dump(AppState.shared.hubs[hub_id]?.channels[channel_id]?.messages.last)
+                                        dump(self.state.hubs[hub_id]?.channels[channel_id]?.messages.last)
+                                    }
+                                    catch {
+                                        print("Error getting message from server: \(error)")
+                                    }
+                                }
+                                print("New message! ID: \(message_id)")
+                            default:
+                                print("Ws message: \(server_message)")
+                        }
+                    } catch {
+                        print("Error parsing Ws message: \(error)")
+                        print("Message: \(string)")
+                    }
+                }
+            case let .failure(error):
+                print("Error receiving Ws message: \(error)")
+                if WICRSClient.websocket.state == .running {
+                    WICRSClient.websocket.receive(completionHandler: handle_ws_message)
+                } else {
+                    print("Websocket closed.")
+                }
+        }
+        
+        return
     }
 }
 
@@ -321,32 +301,36 @@ extension WsServerMessage {
     }
     
     init(from decoder: Decoder) throws {
-        let value = try decoder.singleValueContainer()
-        if let value = try? value.decode(ChMessage.self) {
-            let info = value.ChatMessage
-            self = .ChatMessage(sender_id: info.sender_id, hub_id: info.hub_id, channel_id: info.channel_id, message_id: info.message_id, message: info.message)
-        }
-        if let value = try? value.decode(USoType.self) {
-            let info = value.UserStoppedTyping
-            self = .UserStoppedTyping(user_id: info.user_id, hub_id: info.hub_id, channel_id: info.channel_id)
-        }
-        if let value = try? value.decode(USaType.self) {
-            let info = value.UserStartedTyping
-            self = .UserStartedTyping(user_id: info.user_id, hub_id: info.hub_id, channel_id: info.channel_id)
-        }
-        if let value = try? value.decode(Er.self) {
-            self = .Error(value.Error)
-        }
-        let label = try value.decode(String.self)
-        switch label {
-            case "InvalidCommand": self = .InvalidCommand
-            case "NotSigned": self = .NotSigned
-            case "CommandFailed": self = .CommandFailed
-            case "Success": self = .Success
-            default:
+        if let value = try? decoder.container(keyedBy: WsServerMessage.CodingKeys.self) {
+            if let info = try? value.decode(CMessage.self, forKey: .ChatMessage) {
+                //let info = value.ChatMessage
+                self = .ChatMessage(sender_id: info.sender_id, hub_id: info.hub_id, channel_id: info.channel_id, message_id: info.message_id, message: info.message)
+            } else if let info = try? value.decode(SoType.self, forKey: .UserStoppedTyping) {
+                //let info = value.UserStoppedTyping
+                self = .UserStoppedTyping(user_id: info.user_id, hub_id: info.hub_id, channel_id: info.channel_id)
+            } else if let info = try? value.decode(SaType.self, forKey: .UserStartedTyping) {
+                //let info = value.UserStartedTyping
+                self = .UserStartedTyping(user_id: info.user_id, hub_id: info.hub_id, channel_id: info.channel_id)
+            } else {
                 throw WsServerMessageCodingError.decoding("Unknown value.")
+            }
+            return
+        } else {
+            let value = try decoder.singleValueContainer()
+            if let value = try? value.decode(Er.self) {
+                self = .Error(value.Error)
+            }
+            let label = try value.decode(String.self)
+            switch label {
+                case "InvalidCommand": self = .InvalidCommand
+                case "NotSigned": self = .NotSigned
+                case "CommandFailed": self = .CommandFailed
+                case "Success": self = .Success
+                default:
+                    throw WsServerMessageCodingError.decoding("Unknown value.")
+            }
+            return
         }
-        return
     }
 }
 

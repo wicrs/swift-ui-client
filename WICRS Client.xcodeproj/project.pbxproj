@@ -9,9 +9,6 @@
 /* Begin PBXBuildFile section */
 		E61FA2B327CD6745003AE9FA /* Websocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61FA2B227CD6745003AE9FA /* Websocket.swift */; };
 		E61FA2B427CD6745003AE9FA /* Websocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61FA2B227CD6745003AE9FA /* Websocket.swift */; };
-		E61FA2B727CDF754003AE9FA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E61FA2B627CDF754003AE9FA /* Foundation.framework */; };
-		E61FA2B927CDF759003AE9FA /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E61FA2B827CDF759003AE9FA /* SwiftUI.framework */; };
-		E61FA2BB27CDF7EA003AE9FA /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E61FA2BA27CDF7EA003AE9FA /* CFNetwork.framework */; platformFilter = maccatalyst; };
 		E6307659278BF4750055F02B /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6307649278BF4740055F02B /* App.swift */; };
 		E630765A278BF4750055F02B /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6307649278BF4740055F02B /* App.swift */; };
 		E630765B278BF4750055F02B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E630764A278BF4740055F02B /* ContentView.swift */; };
@@ -26,6 +23,10 @@
 		E6307670278BFC820055F02B /* Hub.swift in Sources */ = {isa = PBXBuildFile; fileRef = E630766E278BFC820055F02B /* Hub.swift */; };
 		E63F4EB6278D3660003799D3 /* Http.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63F4EB5278D3660003799D3 /* Http.swift */; };
 		E63F4EB7278D3660003799D3 /* Http.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63F4EB5278D3660003799D3 /* Http.swift */; };
+		E64CF30027D3300500157E5D /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = E64CF2FF27D3300500157E5D /* AppConfig.swift */; };
+		E64CF30127D3300500157E5D /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = E64CF2FF27D3300500157E5D /* AppConfig.swift */; };
+		E64CF30627D3540400157E5D /* Loaders.swift in Sources */ = {isa = PBXBuildFile; fileRef = E64CF30527D3540400157E5D /* Loaders.swift */; };
+		E64CF30727D3540400157E5D /* Loaders.swift in Sources */ = {isa = PBXBuildFile; fileRef = E64CF30527D3540400157E5D /* Loaders.swift */; };
 		E6F22056279F754F00DEEE1F /* MessageList.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6F22055279F754F00DEEE1F /* MessageList.swift */; };
 		E6F22057279F754F00DEEE1F /* MessageList.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6F22055279F754F00DEEE1F /* MessageList.swift */; };
 		E6F7783B2799D6AC009B8ED8 /* HubRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6F7783A2799D6AC009B8ED8 /* HubRow.swift */; };
@@ -50,13 +51,16 @@
 		E6307649278BF4740055F02B /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		E630764A278BF4740055F02B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		E630764B278BF4750055F02B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		E6307650278BF4750055F02B /* WICRS Client.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "WICRS Client.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		E6307656278BF4750055F02B /* WICRS Client.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "WICRS Client.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E6307650278BF4750055F02B /* WICRS Client.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = "WICRS Client.app"; path = "/Users/willem/dev/WICRS Client/build/Debug-iphoneos/WICRS Client.app"; sourceTree = "<absolute>"; };
+		E6307656278BF4750055F02B /* WICRS Client.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = "WICRS Client.app"; path = "/Users/willem/dev/WICRS Client/build/Debug/WICRS Client.app"; sourceTree = "<absolute>"; };
 		E6307658278BF4750055F02B /* macOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = macOS.entitlements; sourceTree = "<group>"; };
 		E6307668278BF81D0055F02B /* Channel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Channel.swift; sourceTree = "<group>"; };
 		E630766B278BF9DF0055F02B /* Permission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Permission.swift; sourceTree = "<group>"; };
 		E630766E278BFC820055F02B /* Hub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hub.swift; sourceTree = "<group>"; };
 		E63F4EB5278D3660003799D3 /* Http.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Http.swift; sourceTree = "<group>"; };
+		E64CF2FF27D3300500157E5D /* AppConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfig.swift; sourceTree = "<group>"; };
+		E64CF30527D3540400157E5D /* Loaders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loaders.swift; sourceTree = "<group>"; };
+		E6E21B7327D02E040027E882 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E6F22055279F754F00DEEE1F /* MessageList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageList.swift; sourceTree = "<group>"; };
 		E6F7783A2799D6AC009B8ED8 /* HubRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HubRow.swift; sourceTree = "<group>"; };
 		E6F7783D2799D842009B8ED8 /* HubList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HubList.swift; sourceTree = "<group>"; };
@@ -78,9 +82,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E61FA2BB27CDF7EA003AE9FA /* CFNetwork.framework in Frameworks */,
-				E61FA2B927CDF759003AE9FA /* SwiftUI.framework in Frameworks */,
-				E61FA2B727CDF754003AE9FA /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -100,9 +101,9 @@
 		E6307643278BF4740055F02B = {
 			isa = PBXGroup;
 			children = (
+				E6E21B7327D02E040027E882 /* Info.plist */,
 				E6307648278BF4740055F02B /* Shared */,
 				E6307657278BF4750055F02B /* macOS */,
-				E6307651278BF4750055F02B /* Products */,
 				E61FA2B527CDF754003AE9FA /* Frameworks */,
 			);
 			sourceTree = "<group>";
@@ -111,20 +112,13 @@
 			isa = PBXGroup;
 			children = (
 				E6307649278BF4740055F02B /* App.swift */,
+				E64CF2FF27D3300500157E5D /* AppConfig.swift */,
+				E64CF30527D3540400157E5D /* Loaders.swift */,
 				E6307667278BF8020055F02B /* Api */,
 				E6F778392799D689009B8ED8 /* Views */,
 				E630764B278BF4750055F02B /* Assets.xcassets */,
 			);
 			path = Shared;
-			sourceTree = "<group>";
-		};
-		E6307651278BF4750055F02B /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				E6307650278BF4750055F02B /* WICRS Client.app */,
-				E6307656278BF4750055F02B /* WICRS Client.app */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		E6307657278BF4750055F02B /* macOS */ = {
@@ -226,7 +220,7 @@
 				Base,
 			);
 			mainGroup = E6307643278BF4740055F02B;
-			productRefGroup = E6307651278BF4750055F02B /* Products */;
+			productRefGroup = E6307643278BF4740055F02B;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -262,10 +256,12 @@
 			files = (
 				E6F7784A279A3482009B8ED8 /* ChannelView.swift in Sources */,
 				E630766F278BFC820055F02B /* Hub.swift in Sources */,
+				E64CF30627D3540400157E5D /* Loaders.swift in Sources */,
 				E630766C278BF9DF0055F02B /* Permission.swift in Sources */,
 				E6F77844279A2EBC009B8ED8 /* ChannelRow.swift in Sources */,
 				E630765B278BF4750055F02B /* ContentView.swift in Sources */,
 				E6F22056279F754F00DEEE1F /* MessageList.swift in Sources */,
+				E64CF30027D3300500157E5D /* AppConfig.swift in Sources */,
 				E6F77847279A3402009B8ED8 /* ChannelList.swift in Sources */,
 				E6F7783E2799D842009B8ED8 /* HubList.swift in Sources */,
 				E6F778412799D9FE009B8ED8 /* HubView.swift in Sources */,
@@ -283,10 +279,12 @@
 			files = (
 				E6F7784B279A3482009B8ED8 /* ChannelView.swift in Sources */,
 				E6307670278BFC820055F02B /* Hub.swift in Sources */,
+				E64CF30727D3540400157E5D /* Loaders.swift in Sources */,
 				E630766D278BF9DF0055F02B /* Permission.swift in Sources */,
 				E6F77845279A2EBC009B8ED8 /* ChannelRow.swift in Sources */,
 				E630765C278BF4750055F02B /* ContentView.swift in Sources */,
 				E6F22057279F754F00DEEE1F /* MessageList.swift in Sources */,
+				E64CF30127D3300500157E5D /* AppConfig.swift in Sources */,
 				E6F77848279A3402009B8ED8 /* ChannelList.swift in Sources */,
 				E6F7783F2799D842009B8ED8 /* HubList.swift in Sources */,
 				E6F778422799D9FE009B8ED8 /* HubView.swift in Sources */,
@@ -487,12 +485,13 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_FILE = Info.plist;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Willem Leitso";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MACOSX_DEPLOYMENT_TARGET = 12.2;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "net.willemml.WICRS-Client";
 				PRODUCT_NAME = "WICRS Client";
@@ -516,12 +515,13 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_FILE = Info.plist;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Willem Leitso";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MACOSX_DEPLOYMENT_TARGET = 12.2;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "net.willemml.WICRS-Client";
 				PRODUCT_NAME = "WICRS Client";
