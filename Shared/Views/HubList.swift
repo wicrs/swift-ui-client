@@ -14,12 +14,12 @@ struct HubList: View {
         NavigationView {
             List($hubs.values.sorted { $0.name.wrappedValue.compare($1.name.wrappedValue, options: [.caseInsensitive, .numeric]) == ComparisonResult.orderedAscending }) { hub in
                 NavigationLink {
-                    ChannelList(channels: hub.channels.values)
+                    HubView(hub: hub)
                 } label: {
                     HubRow(hub: hub)
                 }
-            }
-        }.navigationTitle("Hubs")
+            }.navigationTitle("Hubs")
+        }
     }
 }
 

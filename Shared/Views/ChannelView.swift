@@ -14,10 +14,6 @@ struct ChannelView: View {
     var body: some View {
         VStack {
             HStack {
-                Text("Name: \(channel.name)")
-                Spacer()
-            }
-            HStack {
                 Text("Description: \(channel.description)")
                 Spacer()
             }

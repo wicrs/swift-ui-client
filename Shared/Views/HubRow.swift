@@ -13,7 +13,6 @@ struct HubRow: View {
     var body: some View {
         HStack {
             Text(hub.name)
-            Spacer()
         }
     }
 }

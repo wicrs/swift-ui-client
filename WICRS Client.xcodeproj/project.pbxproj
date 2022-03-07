@@ -51,8 +51,6 @@
 		E6307649278BF4740055F02B /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		E630764A278BF4740055F02B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		E630764B278BF4750055F02B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		E6307650278BF4750055F02B /* WICRS Client.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = "WICRS Client.app"; path = "/Users/willem/dev/WICRS Client/build/Debug-iphoneos/WICRS Client.app"; sourceTree = "<absolute>"; };
-		E6307656278BF4750055F02B /* WICRS Client.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = "WICRS Client.app"; path = "/Users/willem/dev/WICRS Client/build/Debug/WICRS Client.app"; sourceTree = "<absolute>"; };
 		E6307658278BF4750055F02B /* macOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = macOS.entitlements; sourceTree = "<group>"; };
 		E6307668278BF81D0055F02B /* Channel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Channel.swift; sourceTree = "<group>"; };
 		E630766B278BF9DF0055F02B /* Permission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Permission.swift; sourceTree = "<group>"; };
@@ -60,7 +58,11 @@
 		E63F4EB5278D3660003799D3 /* Http.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Http.swift; sourceTree = "<group>"; };
 		E64CF2FF27D3300500157E5D /* AppConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfig.swift; sourceTree = "<group>"; };
 		E64CF30527D3540400157E5D /* Loaders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loaders.swift; sourceTree = "<group>"; };
-		E6E21B7327D02E040027E882 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E65A8C1F27D35ED1004CB647 /* WICRS Client.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "WICRS Client.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E65A8C2027D35ED1004CB647 /* WICRS Client.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "WICRS Client.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E65A8C2127D42F73004CB647 /* WICRS Client (iOS).entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "WICRS Client (iOS).entitlements"; sourceTree = "<group>"; };
+		E65A8C2327D43003004CB647 /* Info-iOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-iOS.plist"; sourceTree = "<group>"; };
+		E6E21B7327D02E040027E882 /* Info-macOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-macOS.plist"; sourceTree = "<group>"; };
 		E6F22055279F754F00DEEE1F /* MessageList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageList.swift; sourceTree = "<group>"; };
 		E6F7783A2799D6AC009B8ED8 /* HubRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HubRow.swift; sourceTree = "<group>"; };
 		E6F7783D2799D842009B8ED8 /* HubList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HubList.swift; sourceTree = "<group>"; };
@@ -101,10 +103,14 @@
 		E6307643278BF4740055F02B = {
 			isa = PBXGroup;
 			children = (
-				E6E21B7327D02E040027E882 /* Info.plist */,
+				E65A8C2127D42F73004CB647 /* WICRS Client (iOS).entitlements */,
+				E6E21B7327D02E040027E882 /* Info-macOS.plist */,
+				E65A8C2327D43003004CB647 /* Info-iOS.plist */,
 				E6307648278BF4740055F02B /* Shared */,
 				E6307657278BF4750055F02B /* macOS */,
 				E61FA2B527CDF754003AE9FA /* Frameworks */,
+				E65A8C1F27D35ED1004CB647 /* WICRS Client.app */,
+				E65A8C2027D35ED1004CB647 /* WICRS Client.app */,
 			);
 			sourceTree = "<group>";
 		};
@@ -173,7 +179,7 @@
 			);
 			name = "WICRS Client (iOS)";
 			productName = "WICRS Client (iOS)";
-			productReference = E6307650278BF4750055F02B /* WICRS Client.app */;
+			productReference = E65A8C1F27D35ED1004CB647 /* WICRS Client.app */;
 			productType = "com.apple.product-type.application";
 		};
 		E6307655278BF4750055F02B /* WICRS Client (macOS) */ = {
@@ -190,7 +196,7 @@
 			);
 			name = "WICRS Client (macOS)";
 			productName = "WICRS Client (macOS)";
-			productReference = E6307656278BF4750055F02B /* WICRS Client.app */;
+			productReference = E65A8C2027D35ED1004CB647 /* WICRS Client.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -415,11 +421,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "WICRS Client (iOS).entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 4AX3F7R9XQ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Info-iOS.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -434,9 +442,10 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "net.willemml.WICRS-Client";
 				PRODUCT_NAME = "WICRS Client";
 				SDKROOT = iphoneos;
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,6";
 			};
 			name = Debug;
 		};
@@ -445,11 +454,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "WICRS Client (iOS).entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 4AX3F7R9XQ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Info-iOS.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -464,9 +475,10 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "net.willemml.WICRS-Client";
 				PRODUCT_NAME = "WICRS Client";
 				SDKROOT = iphoneos;
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,6";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -485,7 +497,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Info.plist;
+				INFOPLIST_FILE = "Info-macOS.plist";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Willem Leitso";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -515,7 +527,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Info.plist;
+				INFOPLIST_FILE = "Info-macOS.plist";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Willem Leitso";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

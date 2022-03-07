@@ -146,7 +146,7 @@ class HttpClient {
     }
     
     func url_request(endpoint: String, method: String) -> URLRequest {
-        var url_request = URLRequest.init(url: URL.init(string: base_url + endpoint)!)
+        var url_request = URLRequest.init(url: URL.init(string: "\(base_url)\(endpoint)")!)
         url_request.httpMethod = method
         url_request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         url_request.addValue(self.user_id/*.uuidString*/, forHTTPHeaderField: "Authorization")
@@ -155,10 +155,11 @@ class HttpClient {
     
     public func websocket() -> URLSessionWebSocketTask {
         let url_session = URLSession.init(configuration: URLSessionConfiguration.default)
-        var url_request = URLRequest.init(url: URL.init(string: "ws://0.0.0.0:8080/api/websocket")!)
-        url_request.httpMethod = "GET"
-        url_request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        url_request.addValue(self.user_id/*.uuidString*/, forHTTPHeaderField: "Authorization")
+//        var url_request = URLRequest.init(url: URL.init(string: "ws://0.0.0.0:8080/api/websocket")!)
+//        url_request.httpMethod = "GET"
+//        url_request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+//        url_request.addValue(self.user_id/*.uuidString*/, forHTTPHeaderField: "Authorization")
+        let url_request = self.url_request(endpoint: "/api/websocket", method: "GET")
         let websocket = url_session.webSocketTask(with: url_request)
         websocket.resume()
         return websocket

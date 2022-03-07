@@ -12,7 +12,6 @@ struct ChannelRow: View {
     var body: some View {
         HStack {
             Text(channel.name)
-            Spacer()
         }
     }
 }

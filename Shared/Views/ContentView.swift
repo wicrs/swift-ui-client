@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State var hubs: [UUIDString:Hub]
+    @Binding var hubs: [UUIDString:Hub]
     
     var body: some View {
         HubList(hubs: $hubs)
@@ -26,7 +26,7 @@ struct ContentViewPreviewWrapper: View {
     @State var hubs = create_preview_hubs()
     
     var body: some View {
-        ContentView(hubs: hubs)
+        ContentView(hubs: $hubs)
     }
 }
 #endif
