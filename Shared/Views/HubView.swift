@@ -11,14 +11,18 @@ struct HubView: View {
     @Binding var hub: Hub
     
     var body: some View {
-        HStack {
-            VStack {
-                HStack {
-                    Text("Description: \(hub.description)")
-                    Spacer()
-                }
+        VStack {
+            HStack {
+                Text("Description: \(hub.description)")
+                Spacer()
+            }
+#if os(macOS)
+            NavigationView {
                 ChannelList(channels: $hub.channels.values, hub_name: $hub.name)
             }
+#else
+            ChannelList(channels: $hub.channels.values, hub_name: $hub.name)
+#endif
         }
         .navigationTitle(hub.name)
     }

@@ -10,27 +10,26 @@ import SwiftUI
 struct MessageList: View {
     @Binding var messages: [Message]
     
+    var last_message: UUIDString? {
+        get {
+            messages.sorted { $0.created.compare($1.created, options: [.caseInsensitive, .numeric]) == ComparisonResult.orderedAscending }.last?.id
+        }
+    }
+    
     var body: some View {
-#if os(macOS)
-        List(messages.sorted { $0.created.compare($1.created, options: [.caseInsensitive, .numeric]) == ComparisonResult.orderedAscending }) { message in
-            HStack {
-                Text(message.content)
-                Spacer()
-            }
-            
-        }
-        .listStyle(.inset(alternatesRowBackgrounds: true))
-#else
-        List {
-            ForEach(Array(messages.sorted { $0.created.compare($1.created, options: [.caseInsensitive, .numeric]) == ComparisonResult.orderedAscending }.enumerated()), id: \.offset) { index, message in
-                HStack {
-                    Text(message.content)
-                    Spacer()
-                }.listRowBackground((index % 2 == 0) ? Color(UIColor.systemBackground) : Color(UIColor.secondarySystemBackground))
+        ScrollView(.vertical, showsIndicators: false) {
+            ScrollViewReader { proxy in
+                LazyVStack {
+                    ForEach(Array(messages.sorted { $0.created.compare($1.created, options: [.caseInsensitive, .numeric]) == ComparisonResult.orderedAscending }.enumerated()), id: \.offset) { index, message in
+                        MessageRow(id: index, message: message).id(message.id)
+                    }
+                }.onChange(of: messages) { _ in
+                    proxy.scrollTo(last_message)
+                }.onAppear {
+                    proxy.scrollTo(last_message)
+                }
             }
         }
-        .listStyle(GroupedListStyle())
-#endif
     }
 }
 

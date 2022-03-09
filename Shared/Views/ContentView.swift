@@ -12,6 +12,9 @@ struct ContentView: View {
     
     var body: some View {
         HubList(hubs: $hubs)
+#if os(iOS)
+            .navigationViewStyle(.stack)
+#endif
     }
 }
 

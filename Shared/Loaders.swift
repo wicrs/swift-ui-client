@@ -31,16 +31,6 @@ class HubLoader {
     
     func loadHub(id: Hub.ID, server: String) throws -> Hub {
         if let hub = self.servers[server]?[id] {
-            DispatchQueue.global(qos: .background).async {
-                let client = HttpClient(base_url: server, user_id: self.user_id)
-                if let hub = try? client.get_hub(hub_id: id) {
-                    if var hubs = self.servers[server] {
-                        hubs[id] = hub
-                    } else {
-                        self.servers[server] = [id:hub]
-                    }
-                }
-            }
             return hub
         } else {
             let client = HttpClient(base_url: server, user_id: self.user_id)

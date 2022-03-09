@@ -29,9 +29,9 @@ class AppState: ObservableObject {
 @main
 struct WICRSClient: App, Sendable {
     static var config = AppConfig()
-    static var http_client = HttpClient(base_url: config.server, user_id: config.user_id)
+    static var http_client = HttpClient(base_url: AppConfig.server, user_id: AppConfig.user_id)
     static var websocket = http_client.websocket()
-    var hub_loader = HubLoader(user_id: config.user_id)
+    var hub_loader = HubLoader(user_id: AppConfig.user_id)
     @StateObject var state: AppState = AppState()
     @State private var ready: Bool = false
     
@@ -39,58 +39,71 @@ struct WICRSClient: App, Sendable {
         WindowGroup {
             switch ready {
                 case true:
-                    ContentView(hubs: $state.hubs).onAppear {
-                        DispatchQueue.global(qos: .background).async {
-                            Task {
-                                while let message = try? await WICRSClient.websocket.receive() {
-                                    if case let .string(string) = message {
-                                        do {
-                                            let server_message = try JSONDecoder.init().decode(WsServerMessage.self, from: string.data(using: .utf8)!)
-                                            switch server_message {
-                                                case let .Error(err):
-                                                    print("API error: \(err)")
-                                                case let .ChatMessage(sender_id: _, hub_id: hub_id, channel_id: channel_id, message_id: message_id, message: _):
-                                                    DispatchQueue.main.async {
-                                                        do {
-                                                            self.state.hubs[hub_id]?.channels[channel_id]?.messages.append(try WICRSClient.http_client.get_message(hub_id: hub_id, channel_id: channel_id, message_id: message_id))
+                    ContentView(hubs: $state.hubs)
+#if os(macOS)
+                        .frame(width: 720, height: 360, alignment: .center)
+#endif
+                        .onAppear {
+                            DispatchQueue.global(qos: .background).async {
+                                Task {
+                                    while let message = try? await WICRSClient.websocket.receive() {
+                                        if case let .string(string) = message {
+                                            do {
+                                                let server_message = try JSONDecoder.init().decode(WsServerMessage.self, from: string.data(using: .utf8)!)
+                                                switch server_message {
+                                                    case let .Error(err):
+                                                        print("API error: \(err)")
+                                                    case let .ChatMessage(sender_id: _, hub_id: hub_id, channel_id: channel_id, message_id: message_id, message: _):
+                                                        DispatchQueue.main.async {
+                                                            do {
+                                                                self.state.hubs[hub_id]?.channels[channel_id]?.messages.append(try WICRSClient.http_client.get_message(hub_id: hub_id, channel_id: channel_id, message_id: message_id))
+                                                            }
+                                                            catch {
+                                                                print("Error getting message from server: \(error)")
+                                                            }
                                                         }
-                                                        catch {
-                                                            print("Error getting message from server: \(error)")
-                                                        }
-                                                    }
-                                                    print("New message! ID: \(message_id)")
-                                                default:
-                                                    print("Ws message: \(server_message)")
+                                                        print("New message! ID: \(message_id)")
+                                                    default:
+                                                        print("Ws message: \(server_message)")
+                                                }
+                                            } catch {
+                                                print("Error parsing Ws message: \(error)")
+                                                print("Message: \(string)")
                                             }
-                                        } catch {
-                                            print("Error parsing Ws message: \(error)")
-                                            print("Message: \(string)")
                                         }
                                     }
+                                    print("Websocket closed.")
                                 }
-                                print("Websocket closed.")
                             }
                         }
-                    }
                 case false:
                     ProgressView().onAppear(perform: loadData)
             }
         }
+#if os(macOS)
+        Settings {
+            GeneralSettingsView().onSubmit {
+                ready = false
+            }
+        }
+#endif
     }
     
     private func loadData() {
+        WICRSClient.websocket = WICRSClient.http_client.websocket()
         Task {
             print("Finishing websocket authentication...")
             do {
-                try await WICRSClient.websocket.send(.string(WICRSClient.config.user_id))
+                try await WICRSClient.websocket.send(.string(AppConfig.user_id))
             } catch {
                 print("Could not authenticate websocket: \(error)")
             }
         }
         
-        for hub_id in WICRSClient.config.hubs {
+        for hub_id in ConfigDefaults.hubs {
             do {
-                var hub = try self.hub_loader.loadHub(id: hub_id, server: WICRSClient.config.server)
+                let _ = try? WICRSClient.http_client.join_hub(hub_id: hub_id)
+                var hub = try self.hub_loader.loadHub(id: hub_id, server: AppConfig.server)
                 Task {
                     try? await WICRSClient.subscribe_hub(hub_id: hub_id)
                 }

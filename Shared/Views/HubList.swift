@@ -18,8 +18,11 @@ struct HubList: View {
                 } label: {
                     HubRow(hub: hub)
                 }
-            }.navigationTitle("Hubs")
+            }.navigationTitle("Hubs").listStyle(.sidebar)
         }
+//#if os(iOS)
+//        .navigationViewStyle(.stack)
+//#endif
     }
 }
 

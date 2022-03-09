@@ -203,6 +203,8 @@ class HttpClient {
         
         if let result = result?.success {
             return result
+        } else if let result = result?.error {
+            throw result
         } else {
             throw ClientError.EmptyResponse
         }
