@@ -2,7 +2,7 @@
 //  Websocket.swift
 //  WICRS Client
 //
-//  Created by Willem Leitso on 2022-02-28.
+//  Created by Willem on 2022-02-28.
 //
 
 import Foundation

@@ -2,7 +2,7 @@
 //  Hub.swift
 //  WICRS Client
 //
-//  Created by Willem Leitso on 2022-01-09.
+//  Created by Willem on 2022-01-09.
 //
 
 import Foundation
@@ -11,6 +11,7 @@ struct HubMember : Codable {
     let user_id: UUIDString
     let joined: DateString
     let hub: UUIDString
+    var nick: String = ""
     var groups: [UUIDString]
     var hub_permissions: HubPermissions
     var channel_permissions: [UUIDString : ChannelPermissions]
@@ -95,6 +96,10 @@ extension HttpClient {
     
     func unban_member(hub_id: UUIDString, member_id: UUIDString) throws -> String {
         try self.post(endpoint: "/api/member/\(hub_id)/\(member_id)/unban")
+    }
+    
+    func set_member_nick(hub_id: UUIDString, member_id: UUIDString, nick: String, setting: PermissionSetting) throws -> String {
+        try self.post(endpoint: "/api/member/\(hub_id)/set_nick", data: HttpSetNick.init(nick: nick))
     }
     
     func set_member_hub_permission(hub_id: UUIDString, member_id: UUIDString, permission: HubPermission, setting: PermissionSetting) throws -> String {

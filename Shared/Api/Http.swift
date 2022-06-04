@@ -2,7 +2,7 @@
 //  Server.swift
 //  WICRS Client
 //
-//  Created by Willem Leitso on 2022-01-10.
+//  Created by Willem on 2022-01-10.
 //
 
 import Foundation
@@ -146,6 +146,7 @@ class HttpClient {
     }
     
     func url_request(endpoint: String, method: String) -> URLRequest {
+
         var url_request = URLRequest.init(url: URL.init(string: "\(base_url)\(endpoint)")!)
         url_request.httpMethod = method
         url_request.addValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -263,6 +264,10 @@ struct HttpHubUpdate: Codable {
     let name: String?
     let description: String?
     let default_group: UUIDString?
+}
+
+struct HttpSetNick: Codable {
+    let nick: String
 }
 
 struct HttpSendMessage: Codable {

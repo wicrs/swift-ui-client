@@ -2,7 +2,7 @@
 //  ChannelView.swift
 //  WICRS Client
 //
-//  Created by Willem Leitso on 2022-01-20.
+//  Created by Willem on 2022-01-20.
 //
 
 import SwiftUI
@@ -13,10 +13,10 @@ struct ChannelView: View {
     
     var body: some View {
         VStack {
-            HStack {
-                Text("Description: \(channel.description)")
-                Spacer()
-            }
+//            HStack {
+//                Text("Description: \(channel.description)")
+//                Spacer()
+//            }
             MessageList(messages: $channel.messages)
             TextField("", text: $new_message, prompt: Text("New message...")).onSubmit {
                 let _ = try! WICRSClient.http_client.send_message(hub_id: channel.hub_id, channel_id: channel.id, content: new_message)

@@ -2,7 +2,7 @@
 //  MessageRow.swift
 //  WICRS Client
 //
-//  Created by Willem Leitso on 2022-03-08.
+//  Created by Willem on 2022-03-08.
 //
 
 import SwiftUI
@@ -14,7 +14,7 @@ struct MessageRow: View, Identifiable {
     
     var body: some View {
         HStack {
-            Text("\(message.sender.prefix(8).description) > ").font(.system(.body,design: .monospaced))
+            Text("\(get_nick(id: message.sender, hub_id: message.hub_id)) > ").font(.system(.body,design: .monospaced))
             Text(message.content)
             Spacer()
         }
@@ -23,6 +23,14 @@ struct MessageRow: View, Identifiable {
 #else
         .background(Color(id % 2 == 0 ? UIColor.systemBackground : UIColor.secondarySystemBackground))
 #endif
+    }
+}
+
+func get_nick(id: UUIDString, hub_id: UUIDString) -> String {
+    if let nick = try? HubLoader.shared.loadNickFromRemote(server: AppConfig.server, hub_id: hub_id, member_id: id) {
+        return nick
+    } else {
+        return id.prefix(8).description
     }
 }
 

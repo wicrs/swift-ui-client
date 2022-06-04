@@ -2,7 +2,7 @@
 //  Permissions.swift
 //  WICRS Client
 //
-//  Created by Willem Leitso on 2022-01-09.
+//  Created by Willem on 2022-01-09.
 //
 
 import Foundation

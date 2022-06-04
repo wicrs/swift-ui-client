@@ -2,17 +2,32 @@
 //  HubRow.swift
 //  WICRS Client
 //
-//  Created by Willem Leitso on 2022-01-20.
+//  Created by Willem on 2022-01-20.
 //
 
 import SwiftUI
 
 struct HubRow: View {
     @Binding var hub: Hub
+    @State private var showingAlert = false
     
     var body: some View {
         HStack {
-            Text(hub.name)
+            Text(hub.name).help(hub.description)
+            Spacer()
+            Button {
+                showingAlert = true
+            } label: {
+                Image(systemName: "info.circle")
+            }
+            .buttonStyle(PlainButtonStyle())
+            .alert(isPresented: $showingAlert) {
+                Alert(
+                    title: Text("Hub ID"),
+                    message: Text(hub.id),
+                    dismissButton: .default(Text("Done"))
+                )
+            }
         }
     }
 }

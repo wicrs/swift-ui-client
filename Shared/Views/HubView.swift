@@ -2,7 +2,7 @@
 //  HubDetail.swift
 //  WICRS Client
 //
-//  Created by Willem Leitso on 2022-01-20.
+//  Created by Willem on 2022-01-20.
 //
 
 import SwiftUI
@@ -12,10 +12,10 @@ struct HubView: View {
     
     var body: some View {
         VStack {
-            HStack {
-                Text("Description: \(hub.description)")
-                Spacer()
-            }
+//            HStack {
+//                Text("Description: \(hub.description)")
+//                Spacer()
+//            }
 #if os(macOS)
             NavigationView {
                 ChannelList(channels: $hub.channels.values, hub_name: $hub.name)

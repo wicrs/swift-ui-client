@@ -2,20 +2,35 @@
 //  ContentView.swift
 //  Shared
 //
-//  Created by Willem Leitso on 2022-01-09.
+//  Created by Willem on 2022-01-09.
 //
 
 import SwiftUI
 
 struct ContentView: View {
     @Binding var hubs: [UUIDString:Hub]
+//    @State private var joinID = ""
     
     var body: some View {
         HubList(hubs: $hubs)
 #if os(iOS)
             .navigationViewStyle(.stack)
+//#else
+//            .toolbar {
+//                TextField("Join Hub", text: $joinID).onSubmit(onJoin)
+//            }
 #endif
     }
+    
+//    private func onJoin() {
+//        if (try? WICRSClient.http_client.join_hub(hub_id: joinID)) != nil {
+//            hubs[joinID] = try? HubLoader.shared.loadHubSubscribe(joinID)
+//            var in_hubs = AppConfig.hubs
+//            in_hubs.append(joinID)
+//            AppConfig.hubs = in_hubs
+//        }
+//        joinID = ""
+//    }
 }
 
 #if (DEBUG)

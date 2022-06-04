@@ -2,7 +2,7 @@
 //  ChannelList.swift
 //  WICRS Client
 //
-//  Created by Willem Leitso on 2022-01-20.
+//  Created by Willem on 2022-01-20.
 //
 
 import SwiftUI
@@ -14,7 +14,7 @@ struct ChannelList: View {
     var body: some View {
         List($channels.sorted { $0.name.wrappedValue.compare($1.name.wrappedValue, options: [.caseInsensitive, .numeric]) == ComparisonResult.orderedAscending }) { channel in
             NavigationLink {
-                    ChannelView(channel: channel).navigationTitle("\(hub_name) : \(channel.wrappedValue.name)")
+                ChannelView(channel: channel).navigationTitle("\(hub_name) : \(channel.wrappedValue.name)")
             } label: {
                 ChannelRow(channel: channel)
             }

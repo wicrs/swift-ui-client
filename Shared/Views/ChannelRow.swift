@@ -2,7 +2,7 @@
 //  ChannelRow.swift
 //  WICRS Client
 //
-//  Created by Willem Leitso on 2022-01-20.
+//  Created by Willem on 2022-01-20.
 //
 
 import SwiftUI
@@ -10,9 +10,7 @@ import SwiftUI
 struct ChannelRow: View {
     @Binding var channel: Channel
     var body: some View {
-        HStack {
-            Text(channel.name)
-        }
+        Text(channel.name).help(channel.description)
     }
 }
 

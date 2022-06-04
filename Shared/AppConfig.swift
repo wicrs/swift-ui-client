@@ -2,7 +2,7 @@
 //  AppConfig.swift
 //  WICRS Client
 //
-//  Created by Willem Leitso on 2022-03-04.
+//  Created by Willem on 2022-03-04.
 //
 
 import Foundation
@@ -21,6 +21,8 @@ struct ConfigDefaults {
 }
 
 struct AppConfig {
+    public static var shared = AppConfig()
+    
     public static var user_id: UUIDString {
         get {
             if let user_id = UserDefaults.standard.string(forKey: "user_id") {
@@ -63,29 +65,42 @@ struct AppConfig {
         }
     }
     
-//    public static var servers: [Server] {
-//        get {
-//            if let servers = UserDefaults.standard.array(forKey: "servers") as? [Server] {
-//                return servers
-//            } else {
-//                UserDefaults.standard.set(ConfigDefaults.servers, forKey: "servers")
-//                return ConfigDefaults.servers
-//            }
-//        }
-//        set (set_to) {
-//            UserDefaults.standard.set(set_to, forKey: "servers")
-//        }
-//    }
+    //    public static var servers: [Server] {
+    //        get {
+    //            if let servers = UserDefaults.standard.array(forKey: "servers") as? [Server] {
+    //                return servers
+    //            } else {
+    //                UserDefaults.standard.set(ConfigDefaults.servers, forKey: "servers")
+    //                return ConfigDefaults.servers
+    //            }
+    //        }
+    //        set (set_to) {
+    //            UserDefaults.standard.set(set_to, forKey: "servers")
+    //        }
+    //    }
 }
 
 struct GeneralSettingsView: View {
     @AppStorage("server") private var server = ConfigDefaults.server
     @AppStorage("user_id") private var user_id = ConfigDefaults.user_id
+    @Binding var hubs: [UUIDString:Hub]
+    @State private var join_id = ""
     
     var body: some View {
         Form {
             TextField("Server Address", text: $server)
             TextField("User ID", text: $user_id)
+            TextField("Join Hub", text: $join_id).onSubmit {
+                if !join_id.isEmpty{
+                    if (try? WICRSClient.http_client.join_hub(hub_id: join_id)) != nil {
+                        hubs[join_id] = try? HubLoader.shared.loadHubSubscribe(join_id)
+                        var in_hubs = AppConfig.hubs
+                        in_hubs.append(join_id)
+                        AppConfig.hubs = in_hubs
+                    }
+                    join_id = ""
+                }
+            }
         }
         .padding(20)
     }

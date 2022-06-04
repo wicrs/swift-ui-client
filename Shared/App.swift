@@ -2,7 +2,7 @@
 //  WICRS_ClientApp.swift
 //  Shared
 //
-//  Created by Willem Leitso on 2022-01-09.
+//  Created by Willem on 2022-01-09.
 //
 
 import CFNetwork
@@ -28,10 +28,8 @@ class AppState: ObservableObject {
 
 @main
 struct WICRSClient: App, Sendable {
-    static var config = AppConfig()
     static var http_client = HttpClient(base_url: AppConfig.server, user_id: AppConfig.user_id)
     static var websocket = http_client.websocket()
-    var hub_loader = HubLoader(user_id: AppConfig.user_id)
     @StateObject var state: AppState = AppState()
     @State private var ready: Bool = false
     
@@ -79,10 +77,12 @@ struct WICRSClient: App, Sendable {
                 case false:
                     ProgressView().onAppear(perform: loadData)
             }
+        }.commands {
+            WICRSCommands()
         }
 #if os(macOS)
         Settings {
-            GeneralSettingsView().onSubmit {
+            GeneralSettingsView(hubs: $state.hubs).onSubmit {
                 ready = false
             }
         }
@@ -100,28 +100,11 @@ struct WICRSClient: App, Sendable {
             }
         }
         
-        for hub_id in ConfigDefaults.hubs {
+        for hub_id in AppConfig.hubs {
             do {
-                let _ = try? WICRSClient.http_client.join_hub(hub_id: hub_id)
-                var hub = try self.hub_loader.loadHub(id: hub_id, server: AppConfig.server)
-                Task {
-                    try? await WICRSClient.subscribe_hub(hub_id: hub_id)
-                }
-                for (channel_id, var channel) in hub.channels {
-                    Task {
-                        try? await WICRSClient.subscribe_channel(hub_id: hub_id, channel_id: channel_id)
-                    }
-                    do {
-                        let messages = try WICRSClient.http_client.get_messages_last(hub_id: hub_id, channel_id: channel_id, max: 100)
-                        channel.messages.append(contentsOf: messages)
-                        hub.channels[channel_id] = channel
-                    } catch {
-                        print("Failed to load messages for \(channel.name) in \(hub.name).")
-                    }
-                }
-                self.state.hubs[hub_id] = hub
+                self.state.hubs[hub_id] = try HubLoader.shared.loadHubSubscribe(hub_id)
             } catch {
-                print("Failed to load hub with ID \(hub_id):\n\(error)")
+                print("Failed to load hub with ID '\(hub_id)':\n\(error)")
             }
         }
         ready = true

@@ -43,6 +43,8 @@
 		E6F7784B279A3482009B8ED8 /* ChannelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6F77849279A3482009B8ED8 /* ChannelView.swift */; };
 		E6FC40DA27D876D500774180 /* MessageRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FC40D927D876D500774180 /* MessageRow.swift */; };
 		E6FC40DB27D876D500774180 /* MessageRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FC40D927D876D500774180 /* MessageRow.swift */; };
+		E6FC40E027D92E5D00774180 /* WICRSCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FC40DF27D92E5D00774180 /* WICRSCommands.swift */; };
+		E6FC40E127D92E5D00774180 /* WICRSCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FC40DF27D92E5D00774180 /* WICRSCommands.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -73,6 +75,7 @@
 		E6F77846279A3402009B8ED8 /* ChannelList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelList.swift; sourceTree = "<group>"; };
 		E6F77849279A3482009B8ED8 /* ChannelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelView.swift; sourceTree = "<group>"; };
 		E6FC40D927D876D500774180 /* MessageRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageRow.swift; sourceTree = "<group>"; };
+		E6FC40DF27D92E5D00774180 /* WICRSCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WICRSCommands.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,6 +123,7 @@
 		E6307648278BF4740055F02B /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				E6FC40DF27D92E5D00774180 /* WICRSCommands.swift */,
 				E6307649278BF4740055F02B /* App.swift */,
 				E64CF2FF27D3300500157E5D /* AppConfig.swift */,
 				E64CF30527D3540400157E5D /* Loaders.swift */,
@@ -272,6 +276,7 @@
 				E6FC40DA27D876D500774180 /* MessageRow.swift in Sources */,
 				E630765B278BF4750055F02B /* ContentView.swift in Sources */,
 				E6F22056279F754F00DEEE1F /* MessageList.swift in Sources */,
+				E6FC40E027D92E5D00774180 /* WICRSCommands.swift in Sources */,
 				E64CF30027D3300500157E5D /* AppConfig.swift in Sources */,
 				E6F77847279A3402009B8ED8 /* ChannelList.swift in Sources */,
 				E6F7783E2799D842009B8ED8 /* HubList.swift in Sources */,
@@ -296,6 +301,7 @@
 				E6FC40DB27D876D500774180 /* MessageRow.swift in Sources */,
 				E630765C278BF4750055F02B /* ContentView.swift in Sources */,
 				E6F22057279F754F00DEEE1F /* MessageList.swift in Sources */,
+				E6FC40E127D92E5D00774180 /* WICRSCommands.swift in Sources */,
 				E64CF30127D3300500157E5D /* AppConfig.swift in Sources */,
 				E6F77848279A3402009B8ED8 /* ChannelList.swift in Sources */,
 				E6F7783F2799D842009B8ED8 /* HubList.swift in Sources */,
